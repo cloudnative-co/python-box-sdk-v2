@@ -15,7 +15,8 @@ class Downloader(Base):
         file_id: str,
         version: str = None,
         chunk_size: int = 20000000,
-        thread: bool = True
+        thread: bool = True,
+        codec: str = "utf-8"
     ):
         files = Files(client=self)
         if version is None:
@@ -65,6 +66,8 @@ class Downloader(Base):
             results = dict(sorted(temp.items(), key=lambda x: x[0]))
             ret = bytes()
             for key, value in results.items():
+                if isinstance(value, str):
+                    value = value.encode(codec)
                 ret = ret + value
             return ret
         else:
