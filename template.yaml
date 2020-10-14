@@ -10,3 +10,8 @@ Resources:
       RetentionPolicy: Retain
       CompatibleRuntimes:
         - python3.6
+Outputs:
+    BoxSDK:
+        Value: !Ref BoxSDK
+        Export:
+            Name: Layer-BoxSDK
