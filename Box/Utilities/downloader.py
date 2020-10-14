@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # import module snippets
 import concurrent.futures
+import json
 
 from ..base import Base
 from ..exception import APIException
@@ -69,6 +70,10 @@ class Downloader(Base):
                 if isinstance(value, str):
                     value = value.encode(codec)
                 ret = ret + value
+            try:
+                ret = json.loads(ret)
+            except json.decoder.JSONDecodeError as e:
+                pass
             return ret
         else:
             return files.content(file_id=file_id)
