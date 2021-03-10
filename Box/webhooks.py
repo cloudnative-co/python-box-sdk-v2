@@ -50,4 +50,4 @@ class Webhooks(Base):
 
     def delete(self, webhook_id: str):
         path = self.path[sys._getframe().f_code.co_name].format(**locals())
-        return self.request(method="post", path=path)
+        return self.request(method="delete", path=path)
