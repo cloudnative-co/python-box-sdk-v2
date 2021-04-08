@@ -10,6 +10,7 @@ from .files import Files
 from .folders import Folders
 from .groups import Groups
 from .invites import Invites
+from .search import Search
 from .tasks import Tasks
 from .users import Users
 from .versions import Versions
@@ -105,6 +106,10 @@ class Client(Base):
     @property
     def invites(self):
         return Invites(client=self)
+
+    @property
+    def search(self):
+        return Search(client=self)
 
     @property
     def tasks(self):
