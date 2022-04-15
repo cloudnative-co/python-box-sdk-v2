@@ -57,7 +57,8 @@ class Client(Base):
         rsa_private_key_file_sys_path: str = None,
         rsa_private_key_passphrase: str = None,
         user_id: str = None,
-        client: object = None
+        client: object = None,
+        access_token: str = None
     ):
         super(Client, self).__init__(
             client_id,
@@ -68,7 +69,8 @@ class Client(Base):
             rsa_private_key_file_sys_path,
             rsa_private_key_passphrase,
             user_id,
-            client
+            client,
+            access_token
         )
 
     @property

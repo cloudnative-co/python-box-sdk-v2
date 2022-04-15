@@ -39,6 +39,7 @@ class Base(object):
         rsa_private_key_passphrase: str = None,
         user_id: str = None,
         client: object = None,
+        access_token: str = None
     ):
         if client is not None:
             self.headers = client.headers
@@ -47,7 +48,7 @@ class Base(object):
             self.client_secret = client.client_secret
             self.jwt_key_id = client.jwt_key_id
             self.key = client.key
-        else:
+        elif access_token is None:
             key = self.load_private_key(
                 rsa_private_key_data,
                 rsa_private_key_file_sys_path,
@@ -59,6 +60,9 @@ class Base(object):
                 client_id, client_secret, enterprise_id,
                 jwt_key_id, key, user_id
             )
+        else:
+            auth = f"Bearer {access_token}"
+            self.headers["Authorization"] = auth
 
     def load_private_key(
         self,

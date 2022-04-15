@@ -21,8 +21,8 @@ class Collaborations(Base):
         self, fields: list = None, limit: int = None,
         offset: int = None, status: str = None
     ):
-        path = self.path[sys._getframe().f_code.co_name]
         query = get_arguments(locals())
+        path = self.path[sys._getframe().f_code.co_name]
         return self.request(method="get", path=path, query=query)
 
     def info(self, collaboration_id: str, fields: list = None):
