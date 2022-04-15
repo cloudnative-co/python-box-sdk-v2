@@ -27,6 +27,7 @@ class Base(object):
     client_secret: str = None
     key: str = None
     jwt_key_id: str = None
+    access_token = None
 
     def __init__(
         self,
@@ -63,6 +64,9 @@ class Base(object):
         else:
             auth = f"Bearer {access_token}"
             self.headers["Authorization"] = auth
+            if user_id:
+                self.headers["As-User"] = user_id
+
 
     def load_private_key(
         self,
@@ -153,6 +157,7 @@ class Base(object):
             method="POST", path="oauth2/token", payload=payload, headers={}
         )
         self.expire_time = now + datetime.timedelta(seconds=data["expires_in"])
+        self.access_token = data["access_token"]
         auth = "Bearer {access_token}".format(**data)
         if "As-User" in self.headers:
             del self.headers["As-User"]
