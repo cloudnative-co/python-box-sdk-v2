@@ -29,6 +29,10 @@ Maps = {
         "role": {role},
         "status": {status}
     }}""",
+    "CollaborationWhitelist.create": """{{
+        "direction": {direction},
+        "domain": {domain}
+    }}""",
     "Files.copy": """{{
         "name": {name},
         "parent": {{

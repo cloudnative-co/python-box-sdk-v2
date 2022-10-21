@@ -3,6 +3,7 @@
 from .base import Base
 from .collaborations import Collaborations
 from .collections import Collections
+from .collaboration_whitelist import CollaborationWhitelist
 from .comments import Comments
 from .device_pinners import DevicePinners
 from .events import Events
@@ -17,35 +18,30 @@ from .versions import Versions
 from .upload_sessions import UploadSessions
 from .webhooks import Webhooks
 from .Utilities import Uploader, Downloader
-from .Metadata import Files as MetadataFiles
-from .Metadata import Folders as MetadataFolders
-from .Metadata import Templates as MetadataTemplates
-from .Metadata import CascadePolicies
-from .Trash import Folders as TrashFolders
+from .Metadata import Client as Metadata
+from .Trash import Client as Trash
 
 
 class Client(Base):
-    class Metadata(Base):
-        @property
-        def files(self):
-            return MetadataFiles(client=self)
 
-        @property
-        def folders(self):
-            return MetadataFolders(client=self)
-
-        @property
-        def templates(self):
-            return MetadataTemplates(client=self)
-
-        @property
-        def cascade_policy(self):
-            return CascadePolicies(client=self)
-
-    class Trash(Base):
-        @property
-        def folders(self):
-            return TrashFolders(client=self)
+    __collaborations: Collaborations = None
+    __collaboration_whitelist: CollaborationWhitelist = None
+    __collections: Collections = None
+    __comments: Comments = None
+    __device_pinners: DevicePinners = None
+    __events: Events = None
+    __files: Files = None
+    __folders: Folders = None
+    __groups: Groups = None
+    __invites: Invites = None
+    __metadata: Metadata = None
+    __search: Search = None
+    __tasks: Tasks = None
+    __trash: Trash = None
+    __users: Users = None
+    __versions: Versions = None
+    __upload_sessions: UploadSessions = None
+    __webhooks: Webhooks = None
 
     def __init__(
         self,
@@ -75,84 +71,122 @@ class Client(Base):
 
     @property
     def collaborations(self):
-        return Collaborations(client=self)
+        if self.__collaborations is None:
+            self.__collaborations = Collaborations(client=self)
+        return self.__collaborations
+
+    @property
+    def collaboration_whitelist(self):
+        if self.__collaboration_whitelist is None:
+            self.__collaboration_whitelist = CollaborationWhitelist(
+                client=self
+            )
+        return self.__collaboration_whitelist
 
     @property
     def collections(self):
-        return Collections(client=self)
+        if self.__collections is None:
+            self.__collections = Collections(client=self)
+        return self.__collections
 
     @property
     def comments(self):
-        return Comments(client=self)
-
-    @property
-    def device_pinners(self):
-        return DevicePinners(client=self)
-
-    @property
-    def events(self):
-        return Events(client=self)
-
-    @property
-    def files(self):
-        return Files(client=self)
-
-    @property
-    def folders(self):
-        return Folders(client=self)
-
-    @property
-    def groups(self):
-        return Groups(client=self)
-
-    @property
-    def invites(self):
-        return Invites(client=self)
-
-    @property
-    def search(self):
-        return Search(client=self)
-
-    @property
-    def tasks(self):
-        return Tasks(client=self)
-
-    @property
-    def trush(self):
-        return Trush(client=self)
-
-    @property
-    def users(self):
-        return Users(client=self)
-
-    @property
-    def versions(self):
-        return Versions(client=self)
-
-    @property
-    def upload_sessions(self):
-        return UploadSessions(client=self)
-
-    @property
-    def webhooks(self):
-        return Webhooks(client=self)
-
-    @property
-    def metadata(self):
-        return Webhooks(client=self)
-
-    @property
-    def uploader(self):
-        return Uploader(client=self)
+        if self.__comments is None:
+            self.__comments = Comments(client=self)
+        return self.__comments
 
     @property
     def downloader(self):
-        return Downloader(client=self)
+        if self.__downloader is None:
+            self.__downloader = Downloader(client=self)
+        return self.__downloader
+
+    @property
+    def device_pinners(self):
+        if self.__device_pinners is None:
+            self.__device_pinners = DevicePinners(client=self)
+        return self.__device_pinners
+
+    @property
+    def events(self):
+        if self.__events is None:
+            self.__events = Events(client=self)
+        return self.__events
+
+    @property
+    def files(self):
+        if self.__files is None:
+            self.__files = Files(client=self)
+        return self.__files
+
+    @property
+    def folders(self):
+        if self.__folders is None:
+            self.__folders = Folders(client=self)
+        return self.__folders
+
+    @property
+    def groups(self):
+        if self.__groups is None:
+            self.__groups = Groups(client=self)
+        return self.__groups
+
+    @property
+    def invites(self):
+        if self.__invites is None:
+            self.__invites = Invites(client=self)
+        return self.__invites
 
     @property
     def metadata(self):
-        return self.__class__.Metadata(client=self)
+        if self.__metadata is None:
+            self.__metadata = Metadata(client=self)
+        return self.__metadata
+
+    @property
+    def search(self):
+        if self.__search is None:
+            self.__search = Search(client=self)
+        return self.__search
+
+    @property
+    def tasks(self):
+        if self.__tasks is None:
+            self.__tasks = Tasks(client=self)
+        return self.__tasks
 
     @property
     def trash(self):
-        return self.__class__.Trash(client=self)
+        if self.__trash is None:
+            self.__trash = Trash(client=self)
+        return self.__trash
+
+    @property
+    def users(self):
+        if self.__users is None:
+            self.__users = Users(client=self)
+        return self.__users
+
+    @property
+    def versions(self):
+        if self.__versions is None:
+            self.__versions = Versions(client=self)
+        return self.__versions
+
+    @property
+    def upload_sessions(self):
+        if self.__upload_sessions is None:
+            self.__upload_sessions = UploadSessions(client=self)
+        return self.__upload_sessions
+
+    @property
+    def uploader(self):
+        if self.__uploader is None:
+            self.__uploader = Uploader(client=self)
+        return self.__uploader
+
+    @property
+    def webhooks(self):
+        if self.__webhooks is None:
+            self.__webhooks = Webhooks(client=self)
+        return self.__webhooks
