@@ -3,8 +3,19 @@
 rm -rf .aws-sam
 rm -rf ./lib/python/*
 mkdir -p lib/python
+
+# Boxモジュールをコピー
 cp -r Box lib/python
-pip install -r requirements.txt -t ./lib/python
+
+# Dockerコンテナ内でpip installを実行（Python 3.12、Amazon Linux 2023、x86_64互換）
+docker run --rm \
+    --platform linux/amd64 \
+    -v "$(pwd)":/var/task \
+    -w /var/task \
+    --entrypoint /bin/bash \
+    public.ecr.aws/lambda/python:3.12 \
+    -c "pip install -r requirements.txt -t lib/python --upgrade --no-cache-dir"
+
 sam build
 cd .aws-sam/build
 aws cloudformation package \

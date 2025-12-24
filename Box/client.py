@@ -29,6 +29,7 @@ class Client(Base):
     __collections: Collections = None
     __comments: Comments = None
     __device_pinners: DevicePinners = None
+    __downloader: Downloader = None
     __events: Events = None
     __files: Files = None
     __folders: Folders = None
@@ -38,6 +39,7 @@ class Client(Base):
     __search: Search = None
     __tasks: Tasks = None
     __trash: Trash = None
+    __uploader: Uploader = None
     __users: Users = None
     __versions: Versions = None
     __upload_sessions: UploadSessions = None
